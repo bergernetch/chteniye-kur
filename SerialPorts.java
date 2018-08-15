@@ -1,3 +1,4 @@
+// List available serial ports
 // javac -cp /usr/share/java/RXTXcomm.jar:. SerialPorts.java
 // java -cp /usr/share/java/RXTXcomm.jar:. SerialPorts
 
