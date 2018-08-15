@@ -51,9 +51,9 @@ public class ReadVolt {
 
 	}
 
-	/*
-	 * public void shutDown() throws Exception { }
-	 */
+	public void shutDown() throws Exception {
+		fh.close();
+	}
 
 	void connect(String portName) throws Exception {
 		CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
