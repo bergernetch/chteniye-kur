@@ -22,11 +22,6 @@ import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 
-/**
- * This version of the TwoWaySerialComm example makes use of the
- * SerialPortEventListener to avoid polling.
- *
- */
 public class ReadVolt {
 	static Logger logger = Logger.getLogger("BatteryLog");
 	FileHandler fh;
@@ -37,12 +32,9 @@ public class ReadVolt {
 		// init logger
 		try {
 			fh = new FileHandler("/var/log/battery.log", true); // true for append mode
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.exit(-1);
 		}
 
 		logger.addHandler(fh);
@@ -76,16 +68,14 @@ public class ReadVolt {
 				serialPort.notifyOnDataAvailable(true);
 
 			} else {
-				System.out.println("Error: Only serial ports are handled by this example.");
+				System.out.println("Error: Only serial ports are handled");
 			}
 		}
 	}
 
-	// Rewrite and initialize the logger centrally
-
 	/**
 	 * Handles the input coming from the serial port. A new line character is
-	 * treated as the end of a block in this example.
+	 * treated as the end of a block.
 	 */
 	public static class SerialReader implements SerialPortEventListener {
 		private InputStream in;
@@ -102,7 +92,6 @@ public class ReadVolt {
 			// {"A0_mV":"12607","A1_mV":"0","A0_RAW":"500","A1_RAW":"0"}
 
 			try {
-
 				int len = 0;
 				while ((data = in.read()) > -1) {
 					if (data == '\n') {
@@ -158,16 +147,9 @@ public class ReadVolt {
 
 			(new ReadVolt()).connect(args[0]); // "/dev/ttyUSB0"
 
-			/*
-			 * Runtime.getRuntime().addShutdownHook(new Thread() { public void run() {
-			 * r.shutDown();
-			 * 
-			 * } });
-			 */
-
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.exit(-1);
 		}
 	}
 
